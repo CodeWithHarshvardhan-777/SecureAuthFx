@@ -1,0 +1,62 @@
+/* Form body background */
+.body {
+    -fx-background-color: #121212;
+}
+
+/* Titles like "Sign Up" */
+.title-text {
+    -fx-text-fill: white;
+    -fx-font-size: 24px; /* Big */
+    -fx-font-weight: bold;
+    -fx-font-family: "Arial";
+}
+
+/* Labels like "Enter Your Name", "Enter Your Email" */
+.form-label {
+    -fx-text-fill: white;
+    -fx-font-size: 15px; /* Little bigger */
+    -fx-font-family: "Poppins";
+}
+
+/* Hyperlink style (like "Login") */
+.hyperlink {
+    -fx-text-fill: #1DB954; /* Spotify Green for link */
+    -fx-font-size: 14px;
+}
+.message {
+    -fx-text-fill: grey; /* Spotify Green for link */
+    -fx-font-size: 14px;
+}
+/* Buttons already done */
+.button-submit {
+    -fx-background-color: #1DB954;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 30px;
+    -fx-padding: 10px 24px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 3);
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.button-submit:hover {
+    -fx-background-color: #1ed760;
+}
+
+.button-cancel {
+    -fx-background-color: #ff4b5c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 30px;
+    -fx-padding: 10px 24px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 3);
+    -fx-border-color: transparent;
+}
+
+.button-cancel:hover {
+    -fx-background-color: #ff3b4a;
+}
