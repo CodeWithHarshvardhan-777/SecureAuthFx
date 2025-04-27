@@ -3,28 +3,28 @@
     -fx-background-color: #121212;
 }
 
-/* Titles like "Sign Up" */
+/* Title */
 .title-text {
     -fx-text-fill: white;
-    -fx-font-size: 24px; /* Big */
+    -fx-font-size: 24px;
     -fx-font-weight: bold;
     -fx-font-family: "Arial";
 }
 
-/* Labels like "Enter Your Name", "Enter Your Email" */
+/* Labels */
 .form-label {
     -fx-text-fill: white;
-    -fx-font-size: 15px; /* Little bigger */
+    -fx-font-size: 15px;
     -fx-font-family: "Poppins";
 }
 
-/* Hyperlink style (like "Login") */
+/* Hyperlink style  */
 .hyperlink {
-    -fx-text-fill: #1DB954; /* Spotify Green for link */
+    -fx-text-fill: #1DB954;
     -fx-font-size: 14px;
 }
 .message {
-    -fx-text-fill: grey; /* Spotify Green for link */
+    -fx-text-fill: grey;
     -fx-font-size: 14px;
 }
 /* Buttons already done */
