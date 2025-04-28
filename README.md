@@ -1,8 +1,14 @@
-# SecureAuthFX - JavaFX SignUp, Login and OTP Verification 🚀
+# SecureAuthFX - JavaFX SignUp, Login, and OTP Verification 🚀
 
-SecureAuthFX is a simple and secure desktop application built using **JavaFX**.  
+**SecureAuthFX** is a simple and secure desktop application built using **JavaFX**.  
 It allows users to **Sign Up**, **Login**, and **verify their identity using OTP** (One-Time Password).  
 This project is a great example of JavaFX Form Handling + Basic Authentication Flow.
+
+---
+
+## 🚧 Under Construction 🚧
+
+This project is still under development. Currently, the core features are being worked on, and more functionality will be added soon!
 
 ---
 
@@ -19,15 +25,13 @@ This project is a great example of JavaFX Form Handling + Basic Authentication F
 
 ## 🛠️ Technologies Used
 
-- Java 24
-- JavaFX
-- Maven (for dependencies)
-- CSS (for styling)
-- Git (for version control)
+- **Java 24**
+- **JavaFX**
+- **Maven** (for dependencies)
+- **CSS** (for styling)
+- **Git** (for version control)
 
-  
 ---
-
 
 ## 🚀 How to Run
 
