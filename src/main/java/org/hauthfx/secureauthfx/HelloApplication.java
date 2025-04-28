@@ -49,6 +49,9 @@ public class HelloApplication extends Application {
                 Button cancel_form = new Button("Cancel");
                 cancel_form.getStyleClass().add("button-cancel");
 
+                //label for error
+                Label error = new Label();
+
                 GridPane gridPane = new GridPane();
                 gridPane.addRow(1, name_label, name_textfield);
                 gridPane.addRow(2, email_label, email_textfield);
@@ -72,18 +75,78 @@ public class HelloApplication extends Application {
                 formButton.setAlignment(Pos.CENTER);
                 formButton.setPadding(new Insets(10, 0, 0, 0));
 
-                VBox vBox = new VBox(10, hBox, gridPane, login_text, formButton);
-                vBox.getStyleClass().add("body");
-                vBox.setAlignment(Pos.CENTER);
-                Scene scene = new Scene(vBox, 600, 400);
-                scene.setFill(Color.BLACK);
-                scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
-
                 cancel_form.setOnAction(e1->{
                     primaryStage.close();
                     loginWindow.close();
 
                 });
+
+                submit.setOnAction(e2 -> {
+                    String name = name_textfield.getText().trim();
+                    String email = email_textfield.getText().trim();
+                    String password = password_textfield.getText().trim();
+                    String password1 = confirm_passwordfield.getText().trim();
+
+                    if (name.isEmpty()) {
+                        error.getStyleClass().add("error");
+                        error.setText("Please Enter Name.");
+                    } else if (email.isEmpty()) {
+                        error.getStyleClass().add("error");
+                        error.setText("Please Enter Email.");
+                    } else if (!password.equals(password1)) {
+                        error.getStyleClass().add("error");
+                        error.setText("Passwords do not match. Please enter correct password.");
+                    } else if (password.length() < 8) {
+                        error.getStyleClass().add("error");
+                        error.setText("Password must be at least 8 characters long.");
+                    } else {
+
+                        boolean hasLetter = false;
+                        boolean hasNumber = false;
+                        boolean hasSpecial = false;
+
+                        for (char ch : password.toCharArray()) {
+                            if (Character.isLetter(ch)) {
+                                hasLetter = true;
+                            } else if (Character.isDigit(ch)) {
+                                hasNumber = true;
+                            } else {
+                                hasSpecial = true;
+                            }
+                        }
+
+                        if (!hasLetter) {
+                            error.getStyleClass().add("error");
+                            error.setText("Password must contain at least one letter.");
+                        } else if (!hasNumber) {
+                            error.getStyleClass().add("error");
+                            error.setText("Password must contain at least one number.");
+                        } else if (!hasSpecial) {
+                            error.getStyleClass().add("error");
+                            error.setText("Password must contain at least one special character.");
+                        } else {
+                            if(!Store.signUpStore(name,email,password))
+                            {
+                                error.getStyleClass().add("error");
+                                error.setText("Error Occurred. Try Again Later.");
+                            }else {
+                                error.setVisible(false);
+                                error.setText(null);
+                            }
+
+                        }
+                    }
+
+                });
+
+
+
+                VBox vBox = new VBox(10,error, hBox, gridPane, login_text, formButton);
+                vBox.getStyleClass().add("body");
+                vBox.setAlignment(Pos.CENTER);
+                Scene scene = new Scene(vBox, 600, 400);
+                scene.setFill(Color.BLACK);
+                scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
                 primaryStage.setTitle("SignUp Window");
                 primaryStage.setScene(scene);
@@ -115,8 +178,61 @@ public class HelloApplication extends Application {
         Button cancel_form = new Button("Cancel");
         cancel_form.getStyleClass().add("button-cancel");
 
+        //label for error
+        Label error = new Label();
+        error.setVisible(false);
+
+        //label for successfully login or sign up
+        Label success = new Label();
+        success.setVisible(false);
+
+
         cancel_form.setOnAction(e->{
             loginWindow.close();
+
+        });
+
+        submit.setOnAction(e->{
+            String email = email_textfield.getText().trim();
+            String password = password_textfield.getText().trim();
+
+            if(email.isEmpty())
+            {
+                success.setVisible(false);
+                error.setVisible(true);
+                error.getStyleClass().add("error");
+                error.setText("Please Enter Email.");
+            }else if (password.isEmpty())
+            {
+                success.setVisible(false);
+                error.setVisible(true);
+                error.getStyleClass().add("error");
+                error.setText("Please Enter Password.");
+            }else {
+                if(!Store.checkEmail(email))
+                {
+                    success.setVisible(false);
+                    error.setVisible(true);
+                    error.getStyleClass().add("error");
+                    error.setText("Email not Found. Please Enter Correct Email.");
+                }else{
+                    if(!Store.checkLogin(email,password))
+                    {
+                        success.setVisible(false);
+                        error.setVisible(true);
+                        error.getStyleClass().add("error");
+                        error.setText("Wrong Password. Please Enter Correct Password.");
+                    }else {
+                        error.setVisible(false);
+                        success.setVisible(true);
+                        success.getStyleClass().add("successfully");
+                        success.setText("Successfully Login. Please wait....");
+
+                    }
+                }
+
+            }
+
         });
 
         GridPane gridPane = new GridPane();
@@ -140,7 +256,7 @@ public class HelloApplication extends Application {
         HBox login_text = new HBox(1, login_message, hyperlink);
         login_text.setAlignment(Pos.CENTER);
 
-        VBox vBox = new VBox(10, hBox, gridPane, login_text, formbutton);
+        VBox vBox = new VBox(10,success,error,hBox, gridPane, login_text, formbutton);
         vBox.setAlignment(Pos.CENTER);
         vBox.getStyleClass().add("body");
 
