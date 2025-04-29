@@ -32,6 +32,21 @@ public class Store {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                } else if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                } else if (resultSet != null) {
+                    resultSet.close();
+                } {
+
+                }
+            } catch (SQLException e) {
+
+            }
         }
         return store;
     }
@@ -61,6 +76,21 @@ public class Store {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                } else if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                } else if (resultSet != null) {
+                    resultSet.close();
+                } {
+
+                }
+            } catch (SQLException e) {
+
+            }
         }
         return store;
     }
@@ -90,6 +120,21 @@ public class Store {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                } else if (preparedStatement != null)
+                {
+                    preparedStatement.close();
+                } else if (resultSet != null) {
+                    resultSet.close();
+                } {
+
+                }
+            } catch (SQLException e) {
+
+            }
         }
         return store;
     }

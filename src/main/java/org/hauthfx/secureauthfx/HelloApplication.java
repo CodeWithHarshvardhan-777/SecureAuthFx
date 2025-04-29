@@ -1,18 +1,25 @@
 package org.hauthfx.secureauthfx;
 
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URI;
 
 public class HelloApplication extends Application {
     private  Stage loginWindow;
@@ -81,6 +88,10 @@ public class HelloApplication extends Application {
 
                 });
 
+                //progress indicator
+                ProgressIndicator progressIndicator = new ProgressIndicator();
+                progressIndicator.setVisible(false);
+
                 submit.setOnAction(e2 -> {
                     String name = name_textfield.getText().trim();
                     String email = email_textfield.getText().trim();
@@ -125,15 +136,31 @@ public class HelloApplication extends Application {
                             error.getStyleClass().add("error");
                             error.setText("Password must contain at least one special character.");
                         } else {
-                            if(!Store.signUpStore(name,email,password))
-                            {
-                                error.getStyleClass().add("error");
-                                error.setText("Error Occurred. Try Again Later.");
-                            }else {
-                                error.setVisible(false);
-                                error.setText(null);
-                            }
 
+                            progressIndicator.setVisible(true);
+                            progressIndicator.setDisable(true);
+
+                            Task<Void> task = new Task<Void>() {
+                                @Override
+                                protected Void call() throws Exception{
+                                    if(!SendOTP.SendOtp(email))
+                                    {
+                                        error.getStyleClass().add("error");
+                                        error.setText("Please Enter Valid Email.");
+                                    }else {
+                                        error.setText(null);
+                                    }
+                                    return null;
+                                }
+                            };
+                            otpChecking(primaryStage,name,email,password);
+
+                            task.setOnSucceeded(e3->
+                            {
+                                progressIndicator.setVisible(false);
+
+                            });
+                            new Thread(task).start();
                         }
                     }
 
@@ -141,10 +168,15 @@ public class HelloApplication extends Application {
 
 
 
-                VBox vBox = new VBox(10,error, hBox, gridPane, login_text, formButton);
+
+                VBox vBox = new VBox(10,error, hBox,gridPane,login_text, formButton);
                 vBox.getStyleClass().add("body");
                 vBox.setAlignment(Pos.CENTER);
-                Scene scene = new Scene(vBox, 600, 400);
+
+                StackPane stackPane = new StackPane(vBox,progressIndicator);
+                stackPane.setAlignment(Pos.CENTER);
+
+                Scene scene = new Scene(stackPane,600, 400);
                 scene.setFill(Color.BLACK);
                 scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
 
@@ -245,6 +277,7 @@ public class HelloApplication extends Application {
         HBox hBox = new HBox(10, login);
         hBox.setAlignment(Pos.CENTER);
 
+
         HBox formbutton = new HBox(10, submit, cancel_form);
         formbutton.setAlignment(Pos.CENTER);
         formbutton.setPadding(new Insets(10, 0, 0, 0));
@@ -266,6 +299,79 @@ public class HelloApplication extends Application {
         loginWindow.setScene(scene);
         loginWindow.show();
     }
+    public void otpChecking(Stage signUp, String name, String email, String password) {
+        signUp.close();
+        Stage stage = new Stage();
+        stage.setTitle("OTP Verification");
+
+        Hyperlink mail = new Hyperlink("Gmail");
+        mail.getStyleClass().add("hyperlink"); // add hyperlink styling
+        mail.setOnAction(e -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://mail.google.com/mail"));
+            } catch (Exception t) {
+                t.printStackTrace();
+            }
+        });
+
+        Label label = new Label("OTP Successfully Sent. Check");
+        label.getStyleClass().add("title-text");
+
+        Label enter = new Label("Enter OTP:");
+        enter.getStyleClass().add("form-label");
+
+        TextField textField = new TextField();
+        textField.getStyleClass().add("text-field");
+
+        Button submit = new Button("Submit");
+        submit.getStyleClass().add("button-submit");
+
+        Button cancel = new Button("Cancel");
+        cancel.getStyleClass().add("button-cancel");
+
+        Label error = new Label();
+
+        GridPane gridPane = new GridPane();
+        gridPane.addRow(1, enter, textField);
+        gridPane.setHgap(5);
+        gridPane.setAlignment(Pos.CENTER);
+
+        HBox hBox = new HBox(5, label, mail);
+        hBox.setAlignment(Pos.CENTER);
+
+        HBox formButton = new HBox(10, submit, cancel);
+        formButton.setAlignment(Pos.CENTER);
+
+        HBox hBox1 = new HBox(error);
+        hBox1.setAlignment(Pos.CENTER);
+
+        VBox vBox = new VBox(20, hBox1,hBox, gridPane, formButton);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.getStyleClass().add("body"); // apply dark background
+
+        submit.setOnAction(e->{
+            int num = Integer.parseInt(textField.getText().trim());
+            GenrateOtp genrateOtp = new GenrateOtp();
+            if(num != SendOTP.otp)
+            {
+                error.setText("Wrong OTP. Enter Correct OTP");
+                error.getStyleClass().add("error");
+            }else if(!Store.signUpStore(name,email,password)){
+                error.setText("Error 1045");
+                error.getStyleClass().add("error");
+            } else{
+                stage.close();
+            }
+        });
+
+        Scene scene = new Scene(vBox, 400, 300);
+        scene.getStylesheets().add(getClass().getResource("/otpstyle.css").toExternalForm());
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
+
     public static void main(String[] args) {
         launch();
     }

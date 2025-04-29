@@ -73,3 +73,12 @@
     -fx-font-size: 15px;
     -fx-font-family: "Segoe UI";
 }
+.text-field {
+    -fx-background-color: #1E1E1E;
+    -fx-text-fill: white;
+    -fx-border-color: #1DB954;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6 10;
+}
+

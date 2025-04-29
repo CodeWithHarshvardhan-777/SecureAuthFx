@@ -6,14 +6,16 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class SendOTP {
+    protected static int otp;
     public static boolean SendOtp(String sender_Email)
     {
         boolean send = false;
         final String my_Email = "h87539994@gmail.com";
-        final String app_Password = "shso suhu dzxh lbtb";
+        final String app_Password = "dnni ykdp hlah dvdn ";
 
-        //GenrateOtp class i create for Genrate Opt
+        //class for otp
         GenrateOtp genrateOtp = new GenrateOtp();
+        otp = genrateOtp.otpGenrater();
 
         String subject = "Hi This is Me Harshvardhan.";
         String body = "<html>" +
@@ -21,7 +23,7 @@ public class SendOTP {
                 "<body style = 'font-family: arial;'>" +
                 "<center><h1 style = 'color: green; font-weight: bold;'>Thanks For Your Support.</h1></center><hr>" +
                 "<br>" +
-                "<center><h2 style = 'color: black; background-color: green; border-radius: 5px; padding: 5px;'>Your OPT is : " + genrateOtp.getOtp() + "</center></body>" +
+                "<center><h2 style = 'color: black; background-color: green; border-radius: 5px; padding: 5px;'>Your OPT is : " + otp + "</center></body>" +
                 "</html>";
 
         Properties properties = new Properties();
@@ -51,5 +53,6 @@ public class SendOTP {
         }
     }
     public static void main(String[] args) {
+        SendOTP.SendOtp("pandeharshavardhan@gmail.com");
     }
 }
