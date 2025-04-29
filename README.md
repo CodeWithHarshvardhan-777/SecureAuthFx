@@ -6,12 +6,6 @@ This project is a great example of JavaFX Form Handling + Basic Authentication F
 
 ---
 
-## 🚧 Under Construction 🚧
-
-This project is still under development. Currently, the core features are being worked on, and more functionality will be added soon!
-
----
-
 ## ✨ Features
 
 - ✅ Beautiful Sign Up Form
