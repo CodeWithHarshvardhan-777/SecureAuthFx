@@ -364,6 +364,10 @@ public class HelloApplication extends Application {
             }
         });
 
+        cancel.setOnAction(e1 -> {
+            stage.close();
+        });
+
         Scene scene = new Scene(vBox, 400, 300);
         scene.getStylesheets().add(getClass().getResource("/otpstyle.css").toExternalForm());
 

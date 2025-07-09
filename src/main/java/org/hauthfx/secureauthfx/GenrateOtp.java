@@ -19,5 +19,6 @@ public class GenrateOtp {
     public static void main(String[] args) {
        GenrateOtp genrateOtp = new GenrateOtp();
         System.out.println(genrateOtp.otpGenrater());
+
     }
 }

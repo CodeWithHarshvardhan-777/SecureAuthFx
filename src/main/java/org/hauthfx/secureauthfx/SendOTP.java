@@ -11,7 +11,7 @@ public class SendOTP {
     {
         boolean send = false;
         final String my_Email = "h87539994@gmail.com";
-        final String app_Password = "dnni ykdp hlah dvdn ";
+        final String app_Password = "jzdf tvfc icul czep ";
 
         //class for otp
         GenrateOtp genrateOtp = new GenrateOtp();
