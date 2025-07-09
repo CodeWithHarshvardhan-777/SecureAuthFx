@@ -31,4 +31,4 @@ This project is a great example of JavaFX Form Handling + Basic Authentication F
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Harshvardhan-Pande/JavaFX-SignUp-Login-OTP.git
+   git clone https://github.com/CodeWithHarshvardhan-777/SecureAuthFx.git
